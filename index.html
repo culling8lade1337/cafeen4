@@ -1,0 +1,1206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Caféen4, café and brunch by Peblinge Lake in Copenhagen.">
+<title>Caféen4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Oswald:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: full-bleed bands alternating cream / burgundy (Ghia system). Pink all-caps Oswald headlines. Illustrated dishes in circular frames float and drift with scroll and pointer. Single committed look, so every colour is set explicitly. */
+:root{
+  --burgundy:#651c32;
+  --coral:#ef6079;
+  --pink:#d03a59;
+  --pink-hover:#b72e4c;
+  --cream:#f2e2d5;
+  --bone:#fef6ee;
+  --line:#e5e7eb;
+  --rose:#dfcac8;
+  --blue:#abd2eb;
+  --lemon:#f0e87b;
+  --sage:#b6cfd0;
+  --olive:#3e4938;
+  --display:'Oswald','Bebas Neue','Arial Narrow',Impact,sans-serif;
+  --body:'Lora',Georgia,'Times New Roman',serif;
+  --gutter:clamp(16px,4vw,48px);
+  --max:1280px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--burgundy);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+.band-burg :focus-visible,.nav :focus-visible,.foot :focus-visible{outline-color:var(--blue)}
+.band{padding-block:clamp(64px,9vw,112px);padding-inline:var(--gutter);overflow-x:clip;scroll-margin-top:64px}
+.band-cream{background:var(--cream);color:var(--burgundy)}
+.band-burg{background:var(--burgundy);color:var(--bone)}
+.wrap{max-width:var(--max);margin-inline:auto}
+.h-display{font-family:var(--display);font-weight:500;text-transform:uppercase;line-height:1.03;letter-spacing:.005em;text-wrap:balance}
+.title{font-size:clamp(44px,7vw,88px);color:var(--pink)}
+.band-burg .title{color:var(--coral)}
+.eyebrow{font:700 12px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;margin-bottom:16px}
+.lead{font-size:18px;line-height:1.56;max-width:46ch}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px 48px;flex-wrap:wrap}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:9999px;border:1px solid transparent;font:700 15px/1.2 var(--body);cursor:pointer;text-decoration:none;transition:background .25s,color .25s,transform .25s,border-color .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn-pink{background:var(--pink);color:#fff}
+.btn-pink:hover{background:var(--pink-hover)}
+.btn-line{border-color:rgba(101,28,50,.4);color:var(--burgundy);background:transparent}
+.btn-line:hover{background:var(--burgundy);color:var(--bone)}
+.band-burg .btn-line{border-color:rgba(254,246,238,.45);color:var(--bone)}
+.band-burg .btn-line:hover{background:var(--bone);color:var(--burgundy)}
+.btn-sm{padding:9px 18px;font-size:14px}
+.wide{width:100%}
+
+/* top bars */
+.progress{position:fixed;left:0;top:0;height:3px;width:100%;background:var(--pink);transform:scaleX(0);transform-origin:left;z-index:100;pointer-events:none}
+.announce{background:var(--coral);color:var(--burgundy);text-align:center;padding:9px var(--gutter);font:700 13px/1.3 var(--body)}
+.announce a{text-decoration:none}
+.announce a:hover{text-decoration:underline}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--burgundy);color:var(--bone)}
+.nav .in{max-width:var(--max);margin-inline:auto;display:flex;align-items:center;gap:12px 20px;padding:10px var(--gutter);min-height:64px;flex-wrap:wrap}
+.logo{font:italic 700 30px/1 var(--body);text-decoration:none;color:var(--bone);letter-spacing:-.01em}
+.logo b{color:var(--coral);font-style:normal}
+.links{display:flex;gap:4px;margin-inline:auto}
+.links a{padding:8px 15px;border-radius:9999px;text-decoration:none;font-size:14px;transition:background .2s}
+.links a:hover,.links a.on{background:rgba(254,246,238,.16)}
+.lang{display:inline-flex;border:1px solid rgba(254,246,238,.4);border-radius:9999px;padding:3px}
+.lang button{border:0;background:transparent;color:var(--bone);font:700 12px/1 var(--body);letter-spacing:.08em;padding:8px 12px;border-radius:9999px;cursor:pointer;transition:background .2s,color .2s}
+.lang button:hover{background:rgba(254,246,238,.16)}
+.lang button[aria-pressed="true"]{background:var(--bone);color:var(--burgundy)}
+.burger{display:none;width:44px;height:44px;border-radius:50%;border:1px solid rgba(254,246,238,.4);background:transparent;color:var(--bone);cursor:pointer;align-items:center;justify-content:center}
+@media (max-width:860px){
+  .lang{margin-left:auto}
+  .burger{display:inline-flex}
+  .nav .btn-pink{order:1}
+  .links{display:none;order:5;width:100%;flex-direction:column;margin:0;padding-bottom:8px}
+  .nav.open .links{display:flex}
+  .links a{padding:12px 14px}
+}
+@media (max-width:540px){.nav .btn-pink{display:none}}
+
+/* hero */
+.hero{padding-block:clamp(40px,6vw,88px) clamp(56px,7vw,96px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(32px,5vw,72px);align-items:center}
+.hero h1{font-size:clamp(40px,5.8vw,76px);color:var(--pink)}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .ln span{display:block;animation:rise 1s cubic-bezier(.2,.8,.2,1) backwards}
+.hero h1 .ln:nth-child(2) span{animation-delay:.14s}
+@keyframes rise{from{transform:translateY(105%)}}
+.hero .lead{margin-top:24px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.status{display:inline-flex;align-items:center;gap:10px;margin-top:32px;padding:9px 16px;border-radius:9999px;background:var(--bone);font-size:14px}
+.status .dot{width:10px;height:10px;border-radius:50%;background:#3f8f5b;position:relative;flex:none}
+.status .dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:inherit;animation:ping 2s ease-out infinite}
+.status.closed .dot{background:#9a8a84}
+.status.closed .dot::after{animation:none}
+@keyframes ping{from{transform:scale(1);opacity:.7}to{transform:scale(2.6);opacity:0}}
+.addr{margin-top:12px;font-size:14px;opacity:.85}
+.hero-art{position:relative;aspect-ratio:1;width:100%;max-width:540px;margin-inline:auto}
+.ringtxt{position:absolute;inset:-4%;width:108%;height:108%;color:var(--pink);animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sticker{position:absolute;background:var(--lemon);color:var(--burgundy);font:700 12px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;padding:9px 13px;transform:rotate(-5deg);z-index:3;white-space:nowrap}
+
+/* floating bubbles */
+.bubble{position:absolute;left:calc(var(--x)*1%);top:calc(var(--y)*1%);width:calc(var(--s)*1%);will-change:transform}
+.bubble .float{animation:float var(--dur,7s) ease-in-out var(--del,0s) infinite alternate}
+@keyframes float{from{transform:translate3d(0,-10px,0) rotate(-1.5deg)}to{transform:translate3d(0,12px,0) rotate(1.5deg)}}
+.frame{aspect-ratio:1;border-radius:9999px;overflow:hidden;background:var(--bg,var(--rose));transform:rotate(var(--r,0deg))}
+.frame svg{width:100%;height:100%;display:block;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.bubble:hover .frame svg{transform:scale(1.14) rotate(7deg)}
+.stage{position:relative;aspect-ratio:3/2;margin-top:clamp(32px,5vw,64px)}
+.tag{display:flex;align-items:center;gap:10px;width:max-content;max-width:calc(100% + 24px);margin:-20px auto 0;position:relative;background:var(--bone);color:var(--burgundy);border:1.5px solid var(--burgundy);border-radius:9999px;padding:6px 6px 6px 8px}
+.tag .rank{flex:none;width:26px;height:26px;border-radius:50%;background:var(--burgundy);color:var(--bone);font:500 15px/26px var(--display);text-align:center}
+.tag .nm{font:700 15px/1.2 var(--body)}
+.tag .pr{font-size:13px;white-space:nowrap}
+.add{flex:none;width:32px;height:32px;border-radius:50%;border:1.5px solid var(--pink);background:var(--pink);color:#fff;font:700 18px/1 var(--body);cursor:pointer;display:inline-grid;place-items:center;transition:transform .25s,background .25s,color .25s}
+.add:hover{transform:scale(1.12)}
+.add[aria-pressed="true"]{background:var(--bone);color:var(--pink)}
+@media (max-width:700px){
+  /* one big dish per row, alternating sides; the name pill sits below the image, never over it */
+  .stage{aspect-ratio:auto;display:flex;flex-direction:column;gap:40px;margin-top:28px}
+  .stage .bubble{position:relative;left:auto;top:auto;width:min(84%,360px)}
+  .stage .bubble:nth-child(even){align-self:flex-end}
+  .tag{width:100%;max-width:none;margin:16px 0 0;border-radius:28px;gap:10px}
+  .tag .nm{flex:1;min-width:0;font-size:14px}
+}
+
+/* marquee */
+.marquee{background:var(--burgundy);color:var(--bone);overflow:hidden;padding:17px 0}
+.marquee .track{display:flex;width:max-content;animation:slide 40s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.marquee .grp{display:flex}
+.marquee span{font:700 14px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;padding-right:28px;white-space:nowrap}
+.marquee i{color:var(--coral);font-style:normal;padding-right:28px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* reveal: content is always visible, it only drifts into place */
+.reveal{transform:translateY(26px);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{transform:none}
+
+/* menu */
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:32px}
+.search{position:relative;flex:1 1 260px;max-width:380px}
+.search input{width:100%;padding:13px 20px 13px 46px;border-radius:9999px;border:1px solid rgba(254,246,238,.4);background:rgba(254,246,238,.08);color:var(--bone);font:400 15px var(--body)}
+.search input::placeholder{color:var(--rose)}
+.search svg{position:absolute;left:18px;top:50%;translate:0 -50%;width:16px;height:16px;color:var(--rose)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 18px;border-radius:9999px;border:1px solid rgba(254,246,238,.4);background:transparent;color:var(--bone);font:700 12px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+.chip:hover{background:rgba(254,246,238,.16)}
+.chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--burgundy)}
+.count{margin-top:20px;font-size:14px;color:var(--rose)}
+.menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(32px,6vw,80px);margin-top:8px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;grid-template-areas:"name price add" "desc desc add";gap:6px 16px;align-items:start;padding:20px 0;border-bottom:1px solid rgba(254,246,238,.2)}
+.item h3{grid-area:name;font:700 18px/1.3 var(--body);color:var(--bone);transition:color .2s}
+.item:hover h3{color:var(--coral)}
+.item .price{grid-area:price;font:700 16px/1.4 var(--body);white-space:nowrap;font-variant-numeric:tabular-nums}
+.item p{grid-area:desc;font-size:14px;color:var(--rose);max-width:44ch}
+.item .add{grid-area:add;align-self:center;background:transparent;border-color:rgba(254,246,238,.5);color:var(--bone)}
+.item .add[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--burgundy)}
+.empty{padding:40px 0;color:var(--rose)}
+.note{margin-top:32px;font-size:14px;color:var(--rose)}
+@media (max-width:820px){.menu-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* story */
+.story{display:grid;grid-template-columns:1fr 1fr;background:var(--cream);min-height:clamp(480px,48vw,660px);overflow-x:clip;scroll-margin-top:64px}
+.story .txt{padding:clamp(56px,7vw,96px) clamp(24px,5vw,72px) clamp(56px,7vw,96px) max(var(--gutter),calc((100vw - var(--max))/2 + var(--gutter)));display:flex;flex-direction:column;justify-content:center;gap:20px}
+.story .txt p{max-width:46ch;font-size:17px;line-height:1.6}
+.story .txt .eyebrow{margin:0}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.pill{padding:8px 16px;border-radius:9999px;background:var(--rose);font:700 12px/1 var(--body);letter-spacing:.08em;text-transform:uppercase}
+.story .art{position:relative;min-height:380px;background:var(--rose)}
+.story .art svg{position:absolute;inset:0;width:100%;height:100%}
+@media (max-width:820px){.story{grid-template-columns:minmax(0,1fr)}.story .txt{padding:56px var(--gutter)}}
+
+/* reserve */
+.res{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,5vw,72px);align-items:start;margin-top:clamp(32px,5vw,56px)}
+.ticket{border:1.5px dashed rgba(254,246,238,.5);border-radius:24px;padding:28px}
+.ticket .tday{font:500 clamp(36px,5vw,56px)/1.05 var(--display);text-transform:uppercase;color:var(--coral);margin-top:4px}
+.ticket .ttime{margin-top:12px;font-size:20px}
+.ticket .thours{margin-top:12px;font-size:14px;color:var(--rose)}
+.card{background:var(--bone);color:var(--burgundy);border-radius:24px;padding:clamp(22px,3vw,40px)}
+.field{display:grid;gap:8px;margin-bottom:22px;min-width:0}
+.field>label,.field>.lbl{font:700 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase}
+.opt{font-weight:400;letter-spacing:.02em;text-transform:none;opacity:.7}
+.inp{width:100%;padding:13px 18px;border-radius:9999px;border:1px solid rgba(101,28,50,.3);background:var(--cream);color:var(--burgundy);font:400 16px var(--body)}
+textarea.inp{border-radius:20px;min-height:88px;resize:vertical}
+.inp[aria-invalid="true"]{border-color:var(--pink);border-width:2px}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+.quick{display:flex;flex-wrap:wrap;gap:8px}
+.cl{padding:9px 18px;border-radius:9999px;border:1px solid rgba(101,28,50,.3);background:transparent;color:var(--burgundy);font:700 13px/1 var(--body);cursor:pointer;transition:background .2s,color .2s}
+.cl:hover{background:var(--rose)}
+.cl[aria-pressed="true"]{background:var(--burgundy);border-color:var(--burgundy);color:var(--bone)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+.slot{padding:10px 0;border-radius:9999px;border:1px solid rgba(101,28,50,.3);background:transparent;color:var(--burgundy);font:700 14px/1 var(--body);cursor:pointer;font-variant-numeric:tabular-nums;transition:background .2s,color .2s}
+.slot:hover:not(:disabled){background:var(--rose)}
+.slot[aria-pressed="true"]{background:var(--burgundy);border-color:var(--burgundy);color:var(--bone)}
+.slot:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+.hint{font-size:13px;opacity:.8}
+.step{display:inline-flex;align-items:center;gap:18px}
+.step button{width:44px;height:44px;border-radius:50%;border:1px solid rgba(101,28,50,.3);background:transparent;color:inherit;font:700 20px/1 var(--body);cursor:pointer;transition:background .2s}
+.step button:hover{background:var(--rose)}
+.step output{min-width:2ch;text-align:center;font:500 34px/1 var(--display)}
+.pickchips{display:flex;flex-wrap:wrap;gap:8px}
+.pk{display:inline-flex;align-items:center;gap:6px;padding:6px 6px 6px 14px;border-radius:9999px;background:var(--rose);font-size:14px}
+.pk button{width:24px;height:24px;border-radius:50%;border:0;background:var(--burgundy);color:var(--bone);cursor:pointer;font:700 14px/1 var(--body)}
+.err{min-height:1.4em;margin-bottom:12px;font-size:14px;color:var(--pink);font-weight:700}
+.done h3{font-size:clamp(34px,5vw,52px);color:var(--pink)}
+.done dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 20px;margin:24px 0}
+.done dt{font:700 12px/1.8 var(--body);letter-spacing:.12em;text-transform:uppercase}
+.done dd{margin:0;overflow-wrap:anywhere}
+.done .demo{font-size:13px;opacity:.8;margin-top:20px}
+.done .acts{display:flex;flex-wrap:wrap;gap:12px}
+@media (max-width:860px){.res{grid-template-columns:minmax(0,1fr)}.row2{grid-template-columns:minmax(0,1fr)}}
+
+/* visit */
+.visit{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,5vw,72px);align-items:start;margin-top:clamp(32px,5vw,56px)}
+.hours{list-style:none;margin:0 0 28px;padding:0}
+.hours li{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid rgba(101,28,50,.18);font-variant-numeric:tabular-nums}
+.hours li.today{font-weight:700}
+.hours li.today span:first-child::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--pink);margin-right:10px}
+.contact{display:grid;gap:6px;margin-bottom:24px}
+.contact .eyebrow{margin:0}
+.contact .big{font:500 26px/1.15 var(--display);text-transform:uppercase;text-decoration:none;overflow-wrap:anywhere}
+.contact a.big:hover{color:var(--pink)}
+.contact .sel{user-select:all}
+.contact .sub{font-size:14px;opacity:.8}
+.acts2{display:flex;flex-wrap:wrap;gap:12px}
+.mapcard{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line);background:#e9d2c2;aspect-ratio:8/5.6}
+.mapcard svg{display:block;width:100%;height:100%;cursor:grab;touch-action:pan-y}
+.mapcard.zoomed svg{touch-action:none}
+.mapcard.drag svg{cursor:grabbing}
+.mapctl{position:absolute;right:14px;bottom:14px;display:flex;flex-direction:column;gap:8px}
+.mapctl button{width:42px;height:42px;border-radius:50%;border:1px solid rgba(101,28,50,.3);background:var(--bone);color:var(--burgundy);font:700 18px/1 var(--body);cursor:pointer;transition:background .2s}
+.mapctl button:hover{background:var(--rose)}
+.mapcap{position:absolute;left:14px;bottom:12px;font-size:12px;background:var(--bone);padding:5px 12px;border-radius:9999px}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{from{transform:scale(.6);opacity:.8}to{transform:scale(2.4);opacity:0}}
+@media (max-width:860px){.visit{grid-template-columns:minmax(0,1fr)}}
+
+/* footer */
+.foot{padding-block:56px 40px;padding-inline:var(--gutter);background:var(--burgundy);color:var(--bone)}
+.foot .cols{max-width:var(--max);margin-inline:auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+.foot .logo{font-size:40px}
+.foot p{font-size:14px;color:var(--rose);max-width:34ch;margin-top:12px}
+.foot h3{font:700 12px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--coral)}
+.foot .small{max-width:var(--max);margin:40px auto 0;padding-top:20px;border-top:1px solid rgba(254,246,238,.2);font-size:13px;color:var(--rose)}
+@media (max-width:700px){.foot .cols{grid-template-columns:minmax(0,1fr)}}
+
+/* picks pill */
+.picks-pill{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:10px;padding:12px 20px;border-radius:9999px;background:var(--pink);color:#fff;text-decoration:none;font:700 14px/1 var(--body);transition:transform .25s,background .25s}
+.picks-pill:hover{background:var(--pink-hover);transform:translateY(-2px)}
+.picks-pill b{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:50%;background:var(--bone);color:var(--pink);font-size:13px}
+
+/* faq */
+.faq{background:var(--bone);color:var(--burgundy)}
+.faq-list{margin-top:clamp(28px,5vw,48px);display:grid;gap:10px;max-width:880px}
+.faq-list details{border-radius:24px;background:var(--cream);transition:background .2s}
+.faq-list details[open]{background:var(--rose)}
+.faq-list summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 16px 16px 22px;font:700 17px/1.35 var(--body);border-radius:24px}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary::after{content:"+";flex:none;width:34px;height:34px;border-radius:50%;background:var(--pink);color:#fff;display:grid;place-items:center;font:700 20px/1 var(--body);transition:transform .3s}
+.faq-list details[open] summary::after{transform:rotate(45deg)}
+.faq-list .ans{padding:0 22px 20px;max-width:62ch;font-size:16px;line-height:1.55}
+
+/* phone: bigger pictures, less text */
+@media (max-width:820px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .hero-art{max-width:520px}
+}
+@media (max-width:700px){
+  .band{padding-block:48px}
+  .hide-m{display:none}
+  .head{gap:0}
+  .head .lead{display:none}
+  .title{font-size:clamp(40px,12.5vw,56px)}
+  .hero{padding-block:24px 40px}
+  .hero .wrap{gap:28px}
+  .hero .eyebrow{display:none}
+  .hero h1{font-size:clamp(44px,13.5vw,60px)}
+  .hero .lead{font-size:16px;margin-top:16px}
+  .cta{margin-top:22px}
+  .cta .btn{flex:1 1 auto}
+  .status{margin-top:20px}
+  .hero-art{max-width:none;margin-top:8px}
+  #cats{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:4px;scrollbar-width:none}
+  #cats::-webkit-scrollbar{display:none}
+  #cats .chip{flex:none}
+  .search{max-width:none}
+  .item h3{font-size:17px}
+  .story .art{min-height:340px}
+  .story .txt{gap:14px}
+  .ticket{padding:22px}
+  .contact .big{font-size:22px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+body{margin:0}
+[hidden]{display:none!important}
+img{max-width:100%}
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <clipPath id="glassClip"><path d="M62 30 H138 L128 178 Q127 184 120 184 H80 Q73 184 72 178 Z"/></clipPath>
+  <symbol id="d-flat" viewBox="0 0 200 200">
+    <circle cx="100" cy="102" r="86" fill="#fef6ee"/>
+    <circle cx="100" cy="102" r="74" fill="none" stroke="#ecd9c9" stroke-width="2"/>
+    <rect x="138" y="88" width="46" height="28" rx="14" fill="#fffaf5" stroke="#e6cdb8" stroke-width="2"/>
+    <circle cx="100" cy="102" r="56" fill="#fffaf5" stroke="#e6cdb8" stroke-width="2"/>
+    <circle cx="100" cy="102" r="46" fill="#7a3f22"/>
+    <circle cx="100" cy="102" r="42" fill="#b9794c"/>
+    <path d="M100 128 C82 114 76 98 86 90 C93 85 99 89 100 94 C101 89 107 85 114 90 C124 98 118 114 100 128Z" fill="#f7e6d3"/>
+    <path d="M100 124 C90 115 88 106 94 100" fill="none" stroke="#e3c3a2" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="d-avo" viewBox="0 0 200 200">
+    <circle cx="100" cy="102" r="86" fill="#fef6ee"/>
+    <rect x="40" y="48" width="120" height="108" rx="26" fill="#cf9a52"/>
+    <rect x="47" y="55" width="106" height="94" rx="20" fill="#efd08f"/>
+    <g transform="rotate(-24 100 102)">
+      <ellipse cx="68" cy="102" rx="12" ry="38" fill="#6f9f3b"/><ellipse cx="68" cy="102" rx="7.5" ry="33" fill="#c3df8c"/>
+      <ellipse cx="88" cy="102" rx="12" ry="38" fill="#6f9f3b"/><ellipse cx="88" cy="102" rx="7.5" ry="33" fill="#c3df8c"/>
+      <ellipse cx="108" cy="102" rx="12" ry="38" fill="#6f9f3b"/><ellipse cx="108" cy="102" rx="7.5" ry="33" fill="#c3df8c"/>
+      <ellipse cx="128" cy="102" rx="12" ry="38" fill="#6f9f3b"/><ellipse cx="128" cy="102" rx="7.5" ry="33" fill="#c3df8c"/>
+    </g>
+    <path d="M106 72 C116 60 138 64 140 80 C142 94 128 100 116 98 C102 96 96 84 106 72Z" fill="#fffaf2" stroke="#ecd9c9" stroke-width="2"/>
+    <circle cx="122" cy="82" r="9" fill="#f2b134"/>
+    <g fill="#d03a59"><circle cx="64" cy="70" r="2.6"/><circle cx="78" cy="132" r="2.6"/><circle cx="130" cy="124" r="2.6"/><circle cx="98" cy="62" r="2.6"/><circle cx="142" cy="108" r="2.6"/></g>
+    <g fill="#5b3a1e"><ellipse cx="72" cy="112" rx="2.4" ry="1.4"/><ellipse cx="94" cy="124" rx="2.4" ry="1.4"/><ellipse cx="116" cy="118" rx="2.4" ry="1.4"/><ellipse cx="86" cy="86" rx="2.4" ry="1.4"/></g>
+  </symbol>
+  <symbol id="d-waffle" viewBox="0 0 200 200">
+    <circle cx="100" cy="102" r="86" fill="#fef6ee"/>
+    <rect x="42" y="44" width="116" height="116" rx="22" fill="#e3a85a" stroke="#b9772f" stroke-width="3"/>
+    <path d="M71 50V154M100 50V154M129 50V154M48 73H152M48 102H152M48 131H152" fill="none" stroke="#b9772f" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="114" cy="88" rx="17" ry="12" fill="#c2334f" transform="rotate(-18 114 88)"/>
+    <ellipse cx="111" cy="85" rx="9" ry="5" fill="#e0556f" transform="rotate(-18 111 85)"/>
+    <g fill="#fffaf5">
+      <circle cx="62" cy="62" r="2.6"/><circle cx="84" cy="58" r="2.2"/><circle cx="140" cy="60" r="2.6"/><circle cx="148" cy="112" r="2.4"/>
+      <circle cx="60" cy="96" r="2.6"/><circle cx="82" cy="116" r="2.4"/><circle cx="104" cy="124" r="2.6"/><circle cx="130" cy="136" r="2.4"/>
+      <circle cx="70" cy="140" r="2.6"/><circle cx="92" cy="92" r="2.2"/><circle cx="122" cy="116" r="2.2"/><circle cx="56" cy="124" r="2.2"/>
+    </g>
+    <path d="M52 52 L148 148" stroke="#fffaf5" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 9" opacity=".8"/>
+  </symbol>
+  <symbol id="d-lemon" viewBox="0 0 200 200">
+    <ellipse cx="100" cy="188" rx="42" ry="6" fill="#000" opacity=".15"/>
+    <path d="M62 30 H138 L128 178 Q127 184 120 184 H80 Q73 184 72 178 Z" fill="#fff" opacity=".28"/>
+    <g clip-path="url(#glassClip)">
+      <rect x="50" y="52" width="100" height="140" fill="#f6e27a"/>
+      <rect x="50" y="52" width="100" height="14" fill="#faedA0"/>
+      <g fill="#fff" fill-opacity=".55" stroke="#fff" stroke-opacity=".9" stroke-width="1.5">
+        <rect x="72" y="62" width="26" height="26" rx="6" transform="rotate(12 85 75)"/>
+        <rect x="102" y="70" width="26" height="26" rx="6" transform="rotate(-10 115 83)"/>
+        <rect x="80" y="130" width="24" height="24" rx="5" transform="rotate(8 92 142)"/>
+      </g>
+      <g transform="translate(98 112)"><circle r="17" fill="#f4d44a" stroke="#e0b82a" stroke-width="2"/><circle r="13" fill="#fbe98c"/><path d="M0 -13V13M-13 0H13M-9 -9L9 9M9 -9L-9 9" stroke="#f4d44a" stroke-width="1.6"/></g>
+      <g transform="translate(112 154)"><circle r="14" fill="#f4d44a" stroke="#e0b82a" stroke-width="2"/><circle r="10.5" fill="#fbe98c"/><path d="M0 -10.5V10.5M-10.5 0H10.5M-7.5 -7.5L7.5 7.5M7.5 -7.5L-7.5 7.5" stroke="#f4d44a" stroke-width="1.5"/></g>
+    </g>
+    <path d="M62 30 H138 L128 178 Q127 184 120 184 H80 Q73 184 72 178 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/>
+    <line x1="118" y1="8" x2="102" y2="150" stroke="#d03a59" stroke-width="9" stroke-linecap="round"/>
+    <g fill="#5f8f3a"><ellipse cx="82" cy="28" rx="10" ry="16" transform="rotate(-30 82 28)"/><ellipse cx="96" cy="22" rx="10" ry="16" transform="rotate(10 96 22)"/><ellipse cx="72" cy="40" rx="8" ry="13" transform="rotate(-60 72 40)"/></g>
+    <g transform="translate(140 40)"><circle r="17" fill="#f4d44a" stroke="#e0b82a" stroke-width="2"/><circle r="13" fill="#fbe98c"/><path d="M0 -13V13M-13 0H13M-9 -9L9 9M9 -9L-9 9" stroke="#f4d44a" stroke-width="1.6"/></g>
+  </symbol>
+  <symbol id="d-yog" viewBox="0 0 200 200">
+    <circle cx="100" cy="102" r="86" fill="#fef6ee"/>
+    <circle cx="100" cy="102" r="68" fill="#fffaf5" stroke="#e6cdb8" stroke-width="3"/>
+    <circle cx="100" cy="102" r="56" fill="#ffffff" stroke="#efe3d6" stroke-width="2"/>
+    <g fill="#c98a45" stroke="#a8672b" stroke-width="1.5">
+      <ellipse cx="72" cy="94" rx="9" ry="6" transform="rotate(20 72 94)"/><ellipse cx="108" cy="68" rx="8" ry="5.5" transform="rotate(-30 108 68)"/>
+      <ellipse cx="132" cy="84" rx="9" ry="6" transform="rotate(40 132 84)"/><ellipse cx="86" cy="124" rx="8" ry="5.5" transform="rotate(-15 86 124)"/>
+      <ellipse cx="118" cy="132" rx="9" ry="6" transform="rotate(25 118 132)"/><ellipse cx="94" cy="76" rx="7" ry="5" transform="rotate(10 94 76)"/>
+      <ellipse cx="66" cy="116" rx="7" ry="5" transform="rotate(-40 66 116)"/><ellipse cx="136" cy="112" rx="7" ry="5" transform="rotate(5 136 112)"/>
+    </g>
+    <path d="M62 104 Q80 94 94 106 T122 100 T142 108" fill="none" stroke="#e8a317" stroke-width="4" stroke-linecap="round"/>
+    <g fill="#d03a59"><circle cx="82" cy="84" r="8"/><circle cx="124" cy="116" r="8"/><circle cx="100" cy="136" r="7"/></g>
+    <g fill="#3f4c8a"><circle cx="114" cy="86" r="6"/><circle cx="76" cy="112" r="6"/><circle cx="134" cy="98" r="5.5"/></g>
+    <path d="M98 66 l6 -10 l6 10 l-6 3z" fill="#5f8f3a"/>
+  </symbol>
+  <symbol id="d-croissant" viewBox="0 0 200 200">
+    <circle cx="100" cy="102" r="86" fill="#fef6ee"/>
+    <g stroke="#b06a22" stroke-width="2.5" fill="#e3a14f">
+      <ellipse cx="45" cy="134" rx="14" ry="24" transform="rotate(-72 45 134)"/>
+      <ellipse cx="155" cy="134" rx="14" ry="24" transform="rotate(72 155 134)"/>
+      <ellipse cx="64" cy="106" rx="21" ry="34" transform="rotate(-38 64 106)"/>
+      <ellipse cx="136" cy="106" rx="21" ry="34" transform="rotate(38 136 106)"/>
+      <ellipse cx="100" cy="92" rx="26" ry="40"/>
+    </g>
+    <g fill="none" stroke="#f4c780" stroke-width="3" stroke-linecap="round" opacity=".9">
+      <path d="M86 66 Q100 58 114 66"/><path d="M82 86 Q100 78 118 86"/><path d="M82 108 Q100 100 118 108"/>
+      <path d="M48 96 Q56 86 70 90"/><path d="M152 96 Q144 86 130 90"/>
+    </g>
+  </symbol>
+</defs>
+</svg>
+
+<div class="progress" id="bar"></div>
+<div class="announce"><a href="#reserve" data-i18n="ann">Planning a visit? Reserve your table online →</a></div>
+
+<header class="nav" id="nav">
+  <div class="in">
+    <a class="logo" href="#home" aria-label="Caféen4" >Café<b>en4</b></a>
+    <nav class="links" id="links" aria-label="Main">
+      <a href="#top" data-s="top" data-i18n="nav_fav">Favourites</a>
+      <a href="#menu" data-s="menu" data-i18n="nav_menu">Menu</a>
+      <a href="#story" data-s="story" data-i18n="nav_about">About</a>
+      <a href="#reserve" data-s="reserve" data-i18n="nav_reserve">Reserve</a>
+      <a href="#visit" data-s="visit" data-i18n="nav_visit">Visit</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language / Sprog">
+      <button type="button" data-lang="da" aria-pressed="false">DA</button>
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+    </div>
+    <a class="btn btn-pink btn-sm" href="#reserve" data-i18n="book">Book a table</a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="links" aria-label="Open menu" data-i18n-aria="burger_open">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+<section class="band band-cream hero" id="home">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow" data-i18n="h_eyebrow">Café · Brunch · Homemade — Copenhagen</p>
+      <h1 class="h-display"><span class="ln"><span data-i18n="h1a">Slow mornings</span></span><span class="ln"><span data-i18n="h1b">&amp; sweet days.</span></span></h1>
+      <p class="lead"><span data-i18n="h_lead">Caféen4 is a café by Peblinge Lake in Copenhagen.</span> <span class="hide-m" data-i18n="h_lead2">Good coffee, a long brunch and homemade buns, cakes and cookies, served at a table that is waiting for you.</span></p>
+      <div class="cta">
+        <a class="btn btn-pink" href="#reserve" data-i18n="h_cta1">Reserve a table</a>
+        <a class="btn btn-line" href="#menu" data-i18n="h_cta2">See the menu</a>
+      </div>
+      <p class="status" id="status"><span class="dot"></span><span id="statusText" data-i18n="st_init">Open Tuesday to Sunday</span></p>
+      <p class="addr">Peblinge Dossering 4, kld, TH, 2200 København</p>
+    </div>
+    <div class="hero-art px" id="heroArt">
+      <svg class="ringtxt" viewBox="0 0 300 300" aria-hidden="true">
+        <defs><path id="ringp" d="M150,150 m-118,0 a118,118 0 1,1 236,0 a118,118 0 1,1 -236,0"/></defs>
+        <text font-family="Oswald, 'Arial Narrow', sans-serif" font-size="22" letter-spacing="3" fill="currentColor"><textPath href="#ringp" textLength="732" lengthAdjust="spacing" id="ringText">COFFEE • BRUNCH • HOMEMADE • COPENHAGEN • </textPath></text>
+      </svg>
+      <div class="bubble" data-depth="0.5" style="--x:14;--y:16;--s:66"><div class="float" style="--dur:8s"><div class="frame" style="--bg:var(--blue)"><svg viewBox="0 0 200 200" role="img" aria-label="A flat white seen from above" data-i18n-aria="alt_flat"><use href="#d-flat" width="200" height="200"/></svg></div></div></div>
+      <div class="bubble" data-depth="-0.7" style="--x:0;--y:60;--s:36"><div class="float" style="--dur:6s;--del:-2s"><div class="frame" style="--bg:var(--sage)"><svg viewBox="0 0 200 200" role="img" aria-label="A waffle with jam and icing sugar" data-i18n-aria="alt_waffle"><use href="#d-waffle" width="200" height="200"/></svg></div></div></div>
+      <div class="bubble" data-depth="1" style="--x:68;--y:2;--s:30"><div class="float" style="--dur:7s;--del:-4s"><div class="frame" style="--bg:var(--burgundy)"><svg viewBox="0 0 200 200" role="img" aria-label="A butter croissant" data-i18n-aria="alt_croissant"><use href="#d-croissant" width="200" height="200"/></svg></div></div></div>
+      <span class="sticker" style="right:2%;bottom:14%" data-i18n="sticker_home">Homemade</span>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div class="track" id="marquee"></div></div>
+
+<section class="band band-cream" id="top">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <p class="eyebrow" data-i18n="top_eye">Guest favourites</p>
+        <h2 class="h-display title" data-i18n="top_title">The top six</h2>
+      </div>
+      <p class="lead" data-i18n="top_lead">Six picks from the menu. Move through the bubbles and watch them drift. Tap + to add one to your table.</p>
+    </div>
+    <div class="stage px" id="stage"></div>
+  </div>
+</section>
+
+<section class="band band-burg" id="menu">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <p class="eyebrow" data-i18n="menu_eye">Eat &amp; drink</p>
+        <h2 class="h-display title" data-i18n="menu_title">The menu</h2>
+      </div>
+      <p class="lead" data-i18n="menu_lead">Search, filter by section and add what you like. Your picks travel with your reservation.</p>
+    </div>
+    <div class="controls">
+      <label class="search"><span class="vh" data-i18n="search">Search the menu</span>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <input id="q" type="search" placeholder="Search the menu" data-i18n-ph="search" autocomplete="off">
+      </label>
+      <div class="chips" id="cats" role="group" aria-label="Menu sections" data-i18n-aria="menu_sections"></div>
+    </div>
+    <p class="count" id="menuCount" aria-live="polite"></p>
+    <div class="menu-grid" id="menuGrid"></div>
+    <p class="note" data-i18n="menu_note">Extras: syrup 5 kr, oat milk 5 kr. Prices in Danish kroner. Please ask us about allergens.</p>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="txt reveal">
+    <p class="eyebrow" data-i18n="story_eye">Our corner</p>
+    <h2 class="h-display title" data-i18n="story_title">Come as you are</h2>
+    <p data-i18n="story_p1">Caféen4 is a place to slow down by the lake. Come for a coffee, a homemade bun or a long brunch, and stay as long as you like.</p>
+    <p class="hide-m" data-i18n="story_p2">Brunch is served from 9 to 14. Book ahead for a group, or walk in and see what is on the counter.</p>
+    <div class="pills"><span class="pill" data-i18n="pill1">Brunch 9–14</span><span class="pill" data-i18n="pill2">Homemade</span><span class="pill" data-i18n="pill3">Coffee &amp; tea</span><span class="pill" data-i18n="pill4">Sweet treats</span></div>
+  </div>
+  <div class="art">
+    <svg viewBox="0 0 600 640" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of the Caféen4 shopfront with a striped awning and a bicycle" data-i18n-aria="story_alt">
+      <rect width="600" height="640" fill="#dfcac8"/>
+      <rect x="70" y="80" width="460" height="500" fill="#fef6ee"/>
+      <rect x="110" y="104" width="70" height="52" rx="6" fill="#abd2eb" stroke="#651c32" stroke-width="5"/>
+      <rect x="265" y="104" width="70" height="52" rx="6" fill="#abd2eb" stroke="#651c32" stroke-width="5"/>
+      <rect x="420" y="104" width="70" height="52" rx="6" fill="#abd2eb" stroke="#651c32" stroke-width="5"/>
+      <rect x="150" y="172" width="300" height="56" rx="28" fill="#651c32"/>
+      <text x="300" y="211" text-anchor="middle" font-family="Lora, Georgia, serif" font-style="italic" font-weight="700" font-size="32" fill="#fef6ee">Caféen4</text>
+      <g>
+        <polygon points="110,240 157.5,240 162,300 105,300" fill="#d03a59"/>
+        <polygon points="157.5,240 205,240 217,300 162,300" fill="#fef6ee"/>
+        <polygon points="205,240 252.5,240 272,300 217,300" fill="#d03a59"/>
+        <polygon points="252.5,240 300,240 327,300 272,300" fill="#fef6ee"/>
+        <polygon points="300,240 347.5,240 382,300 327,300" fill="#d03a59"/>
+        <polygon points="347.5,240 395,240 437,300 382,300" fill="#fef6ee"/>
+        <polygon points="395,240 442.5,240 492,300 437,300" fill="#d03a59"/>
+        <polygon points="442.5,240 490,240 520,300 492,300" fill="#fef6ee"/>
+        <polygon points="110,240 105,300 80,300" fill="#fef6ee"/>
+        <g fill="#d03a59"><circle cx="133" cy="300" r="26"/><circle cx="245" cy="300" r="27"/><circle cx="355" cy="300" r="27"/><circle cx="465" cy="300" r="27"/></g>
+        <g fill="#fef6ee"><circle cx="189" cy="300" r="27"/><circle cx="300" cy="300" r="27"/><circle cx="410" cy="300" r="27"/></g>
+      </g>
+      <rect x="120" y="340" width="230" height="200" rx="12" fill="#f2e2d5" stroke="#651c32" stroke-width="6"/>
+      <line x1="150" y1="340" x2="150" y2="378" stroke="#651c32" stroke-width="3"/>
+      <path d="M120 378 a30 22 0 0 1 60 0z" fill="#f0e87b"/>
+      <line x1="235" y1="340" x2="235" y2="388" stroke="#651c32" stroke-width="3"/>
+      <path d="M205 388 a30 22 0 0 1 60 0z" fill="#f0e87b"/>
+      <rect x="136" y="470" width="198" height="10" rx="5" fill="#651c32"/>
+      <g fill="#fef6ee" stroke="#651c32" stroke-width="3"><rect x="150" y="440" width="28" height="30" rx="6"/><rect x="196" y="446" width="28" height="24" rx="6"/><rect x="242" y="436" width="28" height="34" rx="6"/></g>
+      <rect x="282" y="450" width="40" height="20" rx="10" fill="#d03a59"/>
+      <rect x="140" y="500" width="170" height="8" rx="4" fill="#dfcac8"/>
+      <rect x="378" y="336" width="104" height="244" rx="8" fill="#651c32"/>
+      <rect x="392" y="352" width="76" height="120" rx="38" fill="#abd2eb"/>
+      <rect x="402" y="484" width="56" height="22" rx="11" fill="#f0e87b"/>
+      <text x="430" y="500" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-size="13" fill="#651c32" letter-spacing="2">OPEN</text>
+      <rect x="0" y="580" width="600" height="60" fill="#b6cfd0"/>
+      <rect x="500" y="520" width="44" height="60" rx="6" fill="#d03a59"/>
+      <g fill="#3e4938"><ellipse cx="512" cy="500" rx="10" ry="30" transform="rotate(-22 512 500)"/><ellipse cx="532" cy="494" rx="10" ry="32" transform="rotate(20 532 494)"/><ellipse cx="522" cy="488" rx="9" ry="34"/></g>
+      <g fill="none" stroke="#3e4938" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="52" cy="560" r="44"/><circle cx="212" cy="560" r="44"/>
+        <path d="M52 560 L112 560 L96 500 L52 560 M96 500 L176 500 L212 560 M112 560 L176 500 M88 490 L106 490 M176 500 L170 478 M162 478 L186 474"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section class="band band-burg" id="reserve">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <p class="eyebrow" data-i18n="res_eye">Book ahead</p>
+        <h2 class="h-display title" data-i18n="res_title">Reserve a table</h2>
+      </div>
+      <p class="lead" data-i18n="res_lead">Pick a day, a time and how many of you are coming.</p>
+    </div>
+    <div class="res">
+      <div class="ticket" aria-live="polite">
+        <p class="eyebrow" data-i18n="tk_label">Your table</p>
+        <p class="tday" id="sumDay"></p>
+        <p class="ttime"><span id="sumTime"></span> · <span id="sumGuests"></span></p>
+        <p class="thours" id="sumHours"></p>
+      </div>
+      <div>
+        <form class="card" id="resForm" novalidate>
+          <div class="field">
+            <span class="lbl" data-i18n="lbl_date">Date</span>
+            <div class="quick"><button type="button" class="cl" data-q="0" data-i18n="today">Today</button><button type="button" class="cl" data-q="1" data-i18n="tomorrow">Tomorrow</button></div>
+            <input class="inp" type="date" id="date" name="date" required aria-label="Date" data-i18n-aria="lbl_date">
+          </div>
+          <div class="field">
+            <span class="lbl" id="timeLbl" data-i18n="lbl_time">Time</span>
+            <div class="slots" id="slots" role="group" aria-labelledby="timeLbl"></div>
+            <p class="hint" id="slotHint"></p>
+          </div>
+          <div class="field">
+            <span class="lbl" id="gLbl" data-i18n="lbl_guests">Guests</span>
+            <div class="step" role="group" aria-labelledby="gLbl">
+              <button type="button" id="gMinus" aria-label="Fewer guests" data-i18n-aria="g_less">−</button>
+              <output id="guests">2</output>
+              <button type="button" id="gPlus" aria-label="More guests" data-i18n-aria="g_more">+</button>
+            </div>
+            <p class="hint" id="gHint"></p>
+          </div>
+          <div class="field">
+            <span class="lbl" data-i18n="lbl_picks">Your picks</span>
+            <div class="pickchips" id="pickChips"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="name" data-i18n="lbl_name">Name</label><input class="inp" id="name" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="phone" data-i18n="lbl_phone">Phone</label><input class="inp" id="phone" name="phone" type="tel" autocomplete="tel"></div>
+          </div>
+          <div class="field"><label for="email"><span data-i18n="lbl_email">Email</span> <span class="opt" data-i18n="lbl_email_opt">(or give a phone number)</span></label><input class="inp" id="email" name="email" type="email" autocomplete="email"></div>
+          <div class="field"><label for="notes" data-i18n="lbl_notes">Notes</label><textarea class="inp" id="notes" name="notes" placeholder="Allergies, a birthday, a pram…" data-i18n-ph="notes_ph"></textarea></div>
+          <p class="err" id="err" role="alert"></p>
+          <button class="btn btn-pink wide" type="submit" data-i18n="submit">Request this table</button>
+        </form>
+        <div class="card done" id="done" hidden>
+          <p class="eyebrow" data-i18n="done_eye">Your request</p>
+          <h3 class="h-display" id="doneTitle"></h3>
+          <dl>
+            <dt data-i18n="d_when">When</dt><dd id="dWhen"></dd>
+            <dt data-i18n="lbl_guests">Guests</dt><dd id="dGuests"></dd>
+            <dt data-i18n="lbl_name">Name</dt><dd id="dName"></dd>
+            <dt data-i18n="d_contact">Contact</dt><dd id="dContact"></dd>
+            <dt data-i18n="d_picks">Picks</dt><dd id="dPicks"></dd>
+            <dt data-i18n="d_ref">Reference</dt><dd id="dRef"></dd>
+          </dl>
+          <div class="acts"><button class="btn btn-pink btn-sm" id="copySum" type="button" data-i18n="copy_sum">Copy summary</button><button class="btn btn-line btn-sm" id="editReq" type="button" data-i18n="edit_req">Change request</button></div>
+          <p class="demo" data-i18n="demo">Preview mode: this form is not connected to the café's inbox yet, so nothing has been delivered. Please call us to confirm a table.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-cream" id="visit">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <p class="eyebrow" data-i18n="vis_eye">Find us</p>
+        <h2 class="h-display title" data-i18n="vis_title">Visit Caféen4</h2>
+      </div>
+      <p class="lead" data-i18n="vis_lead">By Peblinge Lake. Drag the map, zoom in and open it in your maps app for directions.</p>
+    </div>
+    <div class="visit">
+      <div>
+        <ul class="hours" id="hours"></ul>
+        <div class="contact">
+          <p class="eyebrow" data-i18n="addr_lbl">Address</p>
+          <p class="big sel" id="addrText">Peblinge Dossering 4, kld, TH, 2200 København</p>
+          <p class="sub" data-i18n="addr_note">Basement level, door on the right.</p>
+          <p class="eyebrow" style="margin-top:12px" data-i18n="phone_lbl">Phone</p>
+          <a class="big sel" id="phoneText" href="tel:+4528833967">+45 28 83 39 67</a>
+        </div>
+        <div class="acts2">
+          <a class="btn btn-pink" href="https://www.google.com/maps/search/?api=1&amp;query=Peblinge%20Dossering%204%2C%202200%20K%C3%B8benhavn" target="_blank" rel="noopener" data-i18n="gmaps">Open in Google Maps</a>
+          <button class="btn btn-line" type="button" id="copyAddr" data-i18n="copy_addr">Copy address</button>
+        </div>
+      </div>
+      <div class="mapcard" id="mapcard">
+        <svg id="map" viewBox="0 0 800 560" role="img" aria-label="Illustrated map: the café sits on the shore of Peblinge Lake" data-i18n-aria="map_aria">
+          <rect width="800" height="560" fill="#e9d2c2"/>
+          <g id="mapg">
+            <rect x="-400" y="-300" width="1600" height="1160" fill="#e9d2c2"/>
+            <g fill="none" stroke="#fef6ee" stroke-width="16" stroke-linecap="round">
+              <path d="M-400 150 L1200 110"/><path d="M-400 250 L1200 230"/><path d="M-400 520 L1200 500"/>
+              <path d="M190 -300 L270 860"/><path d="M390 -300 L410 860"/><path d="M560 -300 L620 860"/><path d="M-100 560 L520 90"/>
+            </g>
+            <g fill="none" stroke="#fef6ee" stroke-width="8" stroke-linecap="round" opacity=".9">
+              <path d="M290 150 L300 235"/><path d="M470 120 L480 230"/><path d="M60 230 L90 160"/><path d="M300 480 L312 560"/><path d="M500 490 L520 570"/>
+            </g>
+            <path d="M-60 410 C80 430 240 410 400 420 C560 430 700 450 860 410 L860 470 C700 510 560 490 400 480 C240 470 80 490 -60 470Z" fill="#b6cfd0"/>
+            <path d="M-60 340 C80 296 240 304 400 318 C560 332 700 292 860 330 L860 410 C700 450 560 430 400 420 C240 410 80 430 -60 410 Z" fill="#abd2eb"/>
+            <path d="M-60 330 C80 286 240 294 400 308 C560 322 700 282 860 320" fill="none" stroke="#fef6ee" stroke-width="10" stroke-linecap="round"/>
+            <g fill="#8fb39a"><circle cx="120" cy="450" r="14"/><circle cx="200" cy="445" r="12"/><circle cx="320" cy="455" r="15"/><circle cx="470" cy="462" r="13"/><circle cx="600" cy="458" r="15"/><circle cx="720" cy="440" r="12"/></g>
+            <text x="500" y="383" font-family="Lora, Georgia, serif" font-style="italic" font-size="22" fill="#651c32" opacity=".7">Peblinge Sø</text>
+            <circle class="pulse" cx="400" cy="306" r="16" fill="#d03a59"/>
+            <g transform="translate(400 306)">
+              <path d="M0 0 C-22 -26 -22 -46 -22 -52 A22 22 0 1 1 22 -52 C22 -46 22 -26 0 0Z" fill="#d03a59" stroke="#651c32" stroke-width="3"/>
+              <circle cx="0" cy="-52" r="9" fill="#fef6ee"/>
+              <rect x="-50" y="-112" width="100" height="32" rx="16" fill="#651c32"/>
+              <text x="0" y="-91" text-anchor="middle" font-family="Lora, Georgia, serif" font-style="italic" font-weight="700" font-size="17" fill="#fef6ee">Caféen4</text>
+            </g>
+          </g>
+          <g transform="translate(40 52)" fill="#651c32" aria-hidden="true">
+            <path d="M0 -26 L9 0 L0 -6 L-9 0Z"/><text x="0" y="22" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-size="16">N</text>
+          </g>
+        </svg>
+        <div class="mapctl"><button type="button" id="zIn" aria-label="Zoom in" data-i18n-aria="z_in">+</button><button type="button" id="zOut" aria-label="Zoom out" data-i18n-aria="z_out">−</button><button type="button" id="zReset" aria-label="Reset map" data-i18n-aria="z_reset">⌂</button></div>
+        <span class="mapcap" data-i18n="map_cap">Illustrated map</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band faq" id="faq">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <p class="eyebrow" data-i18n="faq_eye">Good to know</p>
+        <h2 class="h-display title" data-i18n="faq_title">Questions</h2>
+      </div>
+      <p class="lead" data-i18n="faq_lead">Quick answers about booking, brunch and finding us.</p>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="cols">
+    <div>
+      <a class="logo" href="#home" aria-label="Caféen4">Café<b>en4</b></a>
+      <p data-i18n="foot_tag">Coffee, brunch and homemade sweets by Peblinge Lake in Copenhagen.</p>
+    </div>
+    <div>
+      <h3 data-i18n="foot_explore">Explore</h3>
+      <ul><li><a href="#top" data-i18n="nav_fav">Favourites</a></li><li><a href="#menu" data-i18n="nav_menu">Menu</a></li><li><a href="#story" data-i18n="nav_about">About</a></li><li><a href="#reserve" data-i18n="nav_reserve">Reserve</a></li><li><a href="#faq" data-i18n="faq_title">Questions</a></li></ul>
+    </div>
+    <div>
+      <h3 data-i18n="foot_visit">Visit</h3>
+      <ul><li>Peblinge Dossering 4</li><li>kld, TH, 2200 København</li><li>+45 28 83 39 67</li></ul>
+    </div>
+  </div>
+  <p class="small" style="max-width:var(--max)">© 2026 Caféen4, København.</p>
+</footer>
+
+<a class="picks-pill" id="picksPill" href="#reserve" hidden><span data-i18n="pill_table">My table</span> <b id="pn">0</b></a>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var pad=function(n){return String(n).padStart(2,'0')};
+var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
+var cap=function(s){return s.charAt(0).toUpperCase()+s.slice(1)};
+
+/* ---------- opening hours (0 = Sunday, null = closed) ---------- */
+var HOURS={0:[9,16],1:null,2:[9,18],3:[9,18],4:[9,18],5:[9,23],6:[9,18]};
+
+/* ---------- translations ---------- */
+var I={
+en:{
+ ann:'Planning a visit? Reserve your table online →',
+ nav_fav:'Favourites',nav_menu:'Menu',nav_about:'About',nav_reserve:'Reserve',nav_visit:'Visit',book:'Book a table',
+ burger_open:'Open menu',burger_close:'Close menu',
+ h_eyebrow:'Café · Brunch · Homemade — Copenhagen',h1a:'Slow mornings',h1b:'& sweet days.',
+ h_lead:'Caféen4 is a café by Peblinge Lake in Copenhagen.',h_lead2:'Good coffee, a long brunch and homemade buns, cakes and cookies, served at a table that is waiting for you.',
+ h_cta1:'Reserve a table',h_cta2:'See the menu',st_init:'Open Tuesday to Sunday',sticker_home:'Homemade',sticker_top:'Top pick',
+ st_open:'Open now · until {t}',st_today:'Closed · opens today at {t}',st_tom:'Closed · opens tomorrow at {t}',st_day:'Closed · opens {d} at {t}',
+ ring:'COFFEE • BRUNCH • HOMEMADE • COPENHAGEN • ',
+ marquee:['Coffee','Brunch','Homemade buns','Waffles','Cookies','Cake of the day','Fresh lemonade','Copenhagen'],
+ top_eye:'Guest favourites',top_title:'The top six',top_lead:'Six picks from the menu. Move through the bubbles and watch them drift. Tap + to add one to your table.',
+ menu_eye:'Eat & drink',menu_title:'The menu',menu_lead:'Search, filter by section and add what you like. Your picks travel with your reservation.',
+ search:'Search the menu',menu_sections:'Menu sections',
+ cat_all:'All',cat_food:'Food & brunch',cat_sweet:'Sweet',cat_coffee:'Coffee',cat_tea:'Tea',cat_soft:'Soft drinks',
+ cnt1:'1 item',cntn:'{n} items',empty:'Nothing matches that search. Try another word or clear the filter.',
+ menu_note:'Extras: syrup 5 kr, oat milk 5 kr. Prices in Danish kroner. Please ask us about allergens.',
+ story_eye:'Our corner',story_title:'Come as you are',
+ story_p1:'Caféen4 is a place to slow down by the lake. Come for a coffee, a homemade bun or a long brunch, and stay as long as you like.',
+ story_p2:'Brunch is served from 9 to 14. Book ahead for a group, or walk in and see what is on the counter.',
+ pill1:'Brunch 9–14',pill2:'Homemade',pill3:'Coffee & tea',pill4:'Sweet treats',
+ story_alt:'Illustration of the Caféen4 shopfront with a striped awning and a bicycle',
+ res_eye:'Book ahead',res_title:'Reserve a table',res_lead:'Pick a day, a time and how many of you are coming.',
+ tk_label:'Your table',tk_choose:'Choose a time',guest1:'{n} guest',guestn:'{n} guests',
+ open_on:'We are open {h} {d}.',closed_on:'We are closed {d}.',
+ lbl_date:'Date',today:'Today',tomorrow:'Tomorrow',lbl_time:'Time',lbl_guests:'Guests',g_less:'Fewer guests',g_more:'More guests',
+ lbl_picks:'Your picks',lbl_name:'Name',lbl_phone:'Phone',lbl_email:'Email',lbl_email_opt:'(or give a phone number)',lbl_notes:'Notes',
+ notes_ph:'Allergies, a birthday, a pram…',submit:'Request this table',
+ slot_hint:'{n} times available. Crossed-out times are taken or have passed.',slot_none:'No times left on this day. Try another date.',slot_closed:'We are closed that day. Pick another date.',
+ slot_past:'This time has passed',slot_full:'Fully booked',g_big:'For parties over 8, please also call us.',
+ picks_empty:'Tap + on any dish to bring it to your table.',
+ add_to:'Add {n} to my table',rem_from:'Remove {n} from my table',rm:'Remove {n}',
+ err_time:'Choose a time for your table.',err_name:'Add your name so we know who to expect.',err_contact:'Add a phone number or an email so we can reach you.',err_email:'That email address looks incomplete.',
+ done_eye:'Your request',done_title:'Thank you, {n}',d_when:'When',d_contact:'Contact',d_picks:'Picks',d_ref:'Reference',none:'None',
+ copy_sum:'Copy summary',edit_req:'Change request',copied:'Copied',copy_fail:'Select and copy manually',
+ demo:"Preview mode: this form is not connected to the café's inbox yet, so nothing has been delivered. Please call us to confirm a table.",
+ sum_title:'Table request, Caféen4',sum_notes:'Notes',
+ vis_eye:'Find us',vis_title:'Visit Caféen4',vis_lead:'By Peblinge Lake. Drag the map, zoom in and open it in your maps app for directions.',
+ closed:'Closed',addr_lbl:'Address',addr_note:'Basement level, door on the right.',phone_lbl:'Phone',gmaps:'Open in Google Maps',copy_addr:'Copy address',
+ map_cap:'Illustrated map',map_aria:'Illustrated map: the café sits on the shore of Peblinge Lake',z_in:'Zoom in',z_out:'Zoom out',z_reset:'Reset map',
+ foot_tag:'Coffee, brunch and homemade sweets by Peblinge Lake in Copenhagen.',foot_explore:'Explore',foot_visit:'Visit',pill_table:'My table',
+ faq_eye:'Good to know',faq_title:'Questions',faq_lead:'Quick answers about booking, brunch and finding us.',
+ alt_flat:'A flat white seen from above',alt_avo:'Avocado toast topped with a fried egg',alt_waffle:'A waffle with jam and icing sugar',alt_lemon:'A glass of homemade lemonade with lemon and mint',alt_yog:'A yoghurt bowl with granola, berries and honey',alt_croissant:'A golden croissant',
+ days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+ days_on:['on Sundays','on Mondays','on Tuesdays','on Wednesdays','on Thursdays','on Fridays','on Saturdays']
+},
+da:{
+ ann:'Skal du forbi? Reserver bord online →',
+ nav_fav:'Favoritter',nav_menu:'Menu',nav_about:'Om os',nav_reserve:'Reserver',nav_visit:'Besøg',book:'Book bord',
+ burger_open:'Åbn menu',burger_close:'Luk menu',
+ h_eyebrow:'Café · Brunch · Hjemmebagt — København',h1a:'Rolige morgener',h1b:'& søde dage.',
+ h_lead:'Caféen4 er en café ved Peblinge Sø i København.',h_lead2:'God kaffe, lang brunch og hjemmebagte boller, kage og cookies, serveret ved et bord, der venter på dig.',
+ h_cta1:'Reserver bord',h_cta2:'Se menuen',st_init:'Åbent tirsdag til søndag',sticker_home:'Hjemmebagt',sticker_top:'Topvalg',
+ st_open:'Åbent nu · til {t}',st_today:'Lukket · åbner i dag kl. {t}',st_tom:'Lukket · åbner i morgen kl. {t}',st_day:'Lukket · åbner {d} kl. {t}',
+ ring:'KAFFE • BRUNCH • HJEMMEBAGT • KØBENHAVN • ',
+ marquee:['Kaffe','Brunch','Hjemmebagte boller','Vafler','Cookies','Dagens kage','Hjemmelavet lemonade','København'],
+ top_eye:'Gæsternes favoritter',top_title:'Top seks',top_lead:'Seks favoritter fra menuen. Bevæg dig gennem boblerne og se dem svæve. Tryk på + for at tilføje til dit bord.',
+ menu_eye:'Mad & drikke',menu_title:'Menuen',menu_lead:'Søg, filtrer efter kategori og tilføj det, du kan lide. Dine valg følger med din reservation.',
+ search:'Søg i menuen',menu_sections:'Menukategorier',
+ cat_all:'Alle',cat_food:'Mad & brunch',cat_sweet:'Det søde',cat_coffee:'Kaffe',cat_tea:'Te',cat_soft:'Softdrinks',
+ cnt1:'1 produkt',cntn:'{n} produkter',empty:'Intet matcher din søgning. Prøv et andet ord eller ryd filteret.',
+ menu_note:'Tilkøb: sirup 5 kr, havremælk 5 kr. Priser i danske kroner. Spørg os om allergener.',
+ story_eye:'Vores hjørne',story_title:'Kom som du er',
+ story_p1:'Caféen4 er et sted at sætte tempoet ned ved søen. Kom forbi til en kaffe, en hjemmebagt bolle eller en lang brunch, og bliv så længe du vil.',
+ story_p2:'Brunch serveres fra 9 til 14. Book i god tid, hvis I er flere, eller kom bare ind og se, hvad der er på disken.',
+ pill1:'Brunch 9–14',pill2:'Hjemmebagt',pill3:'Kaffe & te',pill4:'Det søde',
+ story_alt:'Illustration af Caféen4 med stribet markise og en cykel',
+ res_eye:'Book i god tid',res_title:'Reserver bord',res_lead:'Vælg dag, tidspunkt og hvor mange I kommer.',
+ tk_label:'Dit bord',tk_choose:'Vælg et tidspunkt',guest1:'{n} gæst',guestn:'{n} gæster',
+ open_on:'Vi har åbent {h} {d}.',closed_on:'Vi har lukket {d}.',
+ lbl_date:'Dato',today:'I dag',tomorrow:'I morgen',lbl_time:'Tidspunkt',lbl_guests:'Gæster',g_less:'Færre gæster',g_more:'Flere gæster',
+ lbl_picks:'Dine valg',lbl_name:'Navn',lbl_phone:'Telefon',lbl_email:'E-mail',lbl_email_opt:'(eller oplys telefon)',lbl_notes:'Bemærkninger',
+ notes_ph:'Allergier, en fødselsdag, en barnevogn…',submit:'Anmod om dette bord',
+ slot_hint:'{n} tidspunkter ledige. Overstregede tider er optaget eller forbi.',slot_none:'Ingen ledige tider denne dag. Prøv en anden dato.',slot_closed:'Vi har lukket den dag. Vælg en anden dato.',
+ slot_past:'Tidspunktet er passeret',slot_full:'Fuldt booket',g_big:'Ved flere end 8 personer, ring også til os.',
+ picks_empty:'Tryk på + ved en ret for at tage den med til dit bord.',
+ add_to:'Tilføj {n} til mit bord',rem_from:'Fjern {n} fra mit bord',rm:'Fjern {n}',
+ err_time:'Vælg et tidspunkt til dit bord.',err_name:'Skriv dit navn, så vi ved, hvem vi venter.',err_contact:'Oplys telefon eller e-mail, så vi kan kontakte dig.',err_email:'E-mailadressen ser ufuldstændig ud.',
+ done_eye:'Din anmodning',done_title:'Tak, {n}',d_when:'Hvornår',d_contact:'Kontakt',d_picks:'Valg',d_ref:'Reference',none:'Ingen',
+ copy_sum:'Kopiér oversigt',edit_req:'Ret anmodning',copied:'Kopieret',copy_fail:'Markér og kopiér manuelt',
+ demo:'Forhåndsvisning: formularen er endnu ikke koblet til cafeens indbakke, så intet er sendt. Ring til os for at bekræfte et bord.',
+ sum_title:'Bordanmodning, Caféen4',sum_notes:'Bemærkninger',
+ vis_eye:'Find os',vis_title:'Besøg Caféen4',vis_lead:'Ved Peblinge Sø. Træk i kortet, zoom ind og åbn det i din kortapp for rutevejledning.',
+ closed:'Lukket',addr_lbl:'Adresse',addr_note:'I kælderen, til højre.',phone_lbl:'Telefon',gmaps:'Åbn i Google Maps',copy_addr:'Kopiér adresse',
+ map_cap:'Illustreret kort',map_aria:'Illustreret kort: cafeen ligger ved bredden af Peblinge Sø',z_in:'Zoom ind',z_out:'Zoom ud',z_reset:'Nulstil kort',
+ foot_tag:'Kaffe, brunch og hjemmebagt ved Peblinge Sø i København.',foot_explore:'Udforsk',foot_visit:'Besøg',pill_table:'Mit bord',
+ faq_eye:'Godt at vide',faq_title:'Spørgsmål',faq_lead:'Hurtige svar om booking, brunch og hvordan du finder os.',
+ alt_flat:'En flat white set ovenfra',alt_avo:'Avokadotoast med spejlæg',alt_waffle:'En vaffel med marmelade og flormelis',alt_lemon:'Et glas hjemmelavet lemonade med citron og mynte',alt_yog:'En yoghurtbowl med granola, bær og honning',alt_croissant:'En gylden croissant',
+ days:['søndag','mandag','tirsdag','onsdag','torsdag','fredag','lørdag'],
+ days_on:['om søndagen','om mandagen','om tirsdagen','om onsdagen','om torsdagen','om fredagen','om lørdagen']
+}};
+var lang='en';
+try{var sv=localStorage.getItem('c4lang');if(sv==='da'||sv==='en')lang=sv;else if((navigator.language||'').toLowerCase().indexOf('da')===0)lang='da'}catch(e){}
+function t(k,v){
+  var s=I[lang][k];if(s==null)s=I.en[k];if(s==null)s=k;
+  if(typeof s==='string'&&v){Object.keys(v).forEach(function(x){s=s.split('{'+x+'}').join(v[x])})}
+  return s;
+}
+
+/* ---------- menu data (prices in kr) ---------- */
+var MENU=[
+ {id:'brunch',c:'food',p:'140',n:{en:'Brunch 9–14',da:'Brunch 9–14'},d:{en:'Yoghurt with fresh fruit, homemade granola and honey, a homemade bun, rye bread and butter, cheese and jam, tuna mousse, scrambled eggs and a waffle.',da:'Yoghurt med frisk frugt, hjemmelavet granola og honning, hjemmebagt bolle, rugbrød og smør, ost og marmelade, tunmousse, røræg og vaffel.'}},
+ {id:'morgen',c:'food',p:'80',n:{en:'Morning plate',da:'Morgentallerken'},d:{en:'Homemade bun, cheese, butter, jam, a soft-boiled egg and yoghurt with granola.',da:'Hjemmebagt bolle, ost, smør, marmelade, smilende æg og yoghurt m/granola.'}},
+ {id:'avo',c:'food',p:'65',n:{en:'Smashed avocado toast',da:'Smashed avokado toast'},d:{en:'With pesto, avocado, lettuce, mozzarella, tomato and balsamic. Add a fried egg +15.',da:'Med pesto, avokado, salat, mozzarella, tomat og balsamico. Med spejlæg +15.'}},
+ {id:'yog',c:'food',p:'50',n:{en:'Yoghurt bowl',da:'Yoghurtbowl'},d:{en:'With fresh fruit, homemade granola and honey.',da:'Med frisk frugt, hjemmelavet granola og honning.'}},
+ {id:'bolle_ost',c:'food',p:'35',n:{en:'Homemade bun with butter and cheese',da:'Hjemmebagt bolle med smør og ost'},d:{en:'Add jam +5.',da:'Med marmelade +5.'}},
+ {id:'bolle_aeg',c:'food',p:'50',n:{en:'Homemade bun with soft-boiled egg',da:'Hjemmebagt bolle med smilende æg'},d:{en:'With butter and cheese.',da:'Med smør og ost.'}},
+ {id:'bolle_tun',c:'food',p:'65',n:{en:'Homemade bun with tuna',da:'Hjemmebagt bolle med tun'},d:{en:'With tuna mousse, herb cream, lettuce, onion and chilli honey.',da:'Med tunmousse, urtecreme, salat, løg og chili honning.'}},
+ {id:'bolle_skinke',c:'food',p:'50',n:{en:'Homemade bun with Italian ham',da:'Hjemmebagt bolle med italiensk skinke'},d:{en:'With butter, cheese, Italian ham and lettuce. Add avocado +15.',da:'Med smør, ost, italiensk skinke og salat. Med avokado +15.'}},
+ {id:'toast',c:'food',p:'42',n:{en:'Cheese and ham toastie',da:'Ost og skinke toast'},d:{en:'With butter, gouda, cheddar, Italian ham and seasoning.',da:'Med smør, gouda, cheddar, italiensk skinke og krydderi.'}},
+ {id:'soup',c:'food',p:'55',n:{en:'Soup of the day',da:'Dagens suppe'},d:{en:'',da:''}},
+ {id:'waffle',c:'sweet',p:'35',n:{en:'Waffle',da:'Vaffel'},d:{en:'With jam and icing sugar.',da:'Med marmelade og flormelis.'}},
+ {id:'cake',c:'sweet',p:'35',n:{en:'Homemade cake of the day',da:'Dagens hjemmebagte kage'},d:{en:'',da:''}},
+ {id:'cookies',c:'sweet',p:'30',n:{en:'Homemade cookies',da:'Hjemmebagte cookies'},d:{en:'',da:''}},
+ {id:'croissant',c:'sweet',p:'30',n:{en:'Croissant',da:'Croissant'},d:{en:'',da:''}},
+ {id:'cocopops',c:'sweet',p:'30',n:{en:'Coco Pops',da:'Coco Pops'},d:{en:'',da:''}},
+ {id:'cappu',c:'coffee',p:'38 / 42',n:{en:'Cappuccino',da:'Cappuccino'},d:{en:'',da:''}},
+ {id:'latte',c:'coffee',p:'38 / 42',n:{en:'Latte',da:'Latte'},d:{en:'',da:''}},
+ {id:'americano',c:'coffee',p:'35',n:{en:'Americano',da:'Americano'},d:{en:'',da:''}},
+ {id:'isamericano',c:'coffee',p:'35',n:{en:'Iced Americano',da:'Is Americano'},d:{en:'',da:''}},
+ {id:'islatte',c:'coffee',p:'42',n:{en:'Iced latte',da:'Is latte'},d:{en:'',da:''}},
+ {id:'espresso',c:'coffee',p:'32',n:{en:'Espresso',da:'Espresso'},d:{en:'',da:''}},
+ {id:'cortado',c:'coffee',p:'35',n:{en:'Cortado',da:'Cortado'},d:{en:'',da:''}},
+ {id:'flat',c:'coffee',p:'38',n:{en:'Flat white',da:'Flat white'},d:{en:'',da:''}},
+ {id:'cocoa',c:'coffee',p:'45',n:{en:'Hot chocolate',da:'Varm kakao'},d:{en:'With whipped cream.',da:'Med flødeskum.'}},
+ {id:'chai',c:'coffee',p:'43',n:{en:'Chai latte',da:'Chai latte'},d:{en:'',da:''}},
+ {id:'tea',c:'tea',p:'40',n:{en:'Homemade tea',da:'Hjemmelavet te'},d:{en:'With ginger, honey, mint and lemon.',da:'Med ingefær, honning, mynte og citron.'}},
+ {id:'earl',c:'tea',p:'25',n:{en:'Earl Grey',da:'Earl Grey'},d:{en:'With milk and honey +7.',da:'Med mælk og honning +7.'}},
+ {id:'lemon',c:'soft',p:'35 / 40',n:{en:'Homemade lemonade',da:'Hjemmelavet lemonade'},d:{en:'',da:''}},
+ {id:'oj',c:'soft',p:'35',n:{en:'Orange juice',da:'Appelsinjuice'},d:{en:'',da:''}},
+ {id:'water',c:'soft',p:'35',n:{en:'Sparkling water',da:'Danskvand'},d:{en:'',da:''}},
+ {id:'cola',c:'soft',p:'35',n:{en:'Cola',da:'Cola'},d:{en:'',da:''}},
+ {id:'colazero',c:'soft',p:'35',n:{en:'Cola Zero',da:'Cola Zero'},d:{en:'',da:''}},
+ {id:'sportscola',c:'soft',p:'40',n:{en:'Sports Cola',da:'Sports Cola'},d:{en:'',da:''}},
+ {id:'sprite',c:'soft',p:'35',n:{en:'Sprite',da:'Sprite'},d:{en:'',da:''}},
+ {id:'tonic',c:'soft',p:'35',n:{en:'Tonic',da:'Tonic'},d:{en:'',da:''}},
+ {id:'squash',c:'soft',p:'35',n:{en:'Squash',da:'Squash'},d:{en:'',da:''}}
+];
+var byId={};MENU.forEach(function(m){byId[m.id]=m});
+var CAT_IDS=['all','food','sweet','coffee','tea','soft'];
+var TOP=[
+ {id:'avo',sym:'d-avo',bg:'var(--burgundy)',alt:'alt_avo',x:2,y:4,s:24,mx:2,my:0,ms:44,dep:.7,dur:7,del:-1},
+ {id:'flat',sym:'d-flat',bg:'var(--coral)',alt:'alt_flat',x:38,y:0,s:20,mx:54,my:6,ms:42,dep:-.5,dur:8,del:-3},
+ {id:'waffle',sym:'d-waffle',bg:'var(--sage)',alt:'alt_waffle',x:70,y:6,s:26,mx:2,my:32,ms:44,dep:1,dur:6.5,del:-2},
+ {id:'lemon',sym:'d-lemon',bg:'var(--blue)',alt:'alt_lemon',x:12,y:52,s:22,mx:54,my:37,ms:42,dep:-.8,dur:7.5,del:-4},
+ {id:'yog',sym:'d-yog',bg:'var(--rose)',alt:'alt_yog',x:40,y:40,s:28,mx:2,my:64,ms:44,dep:.5,dur:9,del:-5},
+ {id:'croissant',sym:'d-croissant',bg:'var(--blue)',alt:'alt_croissant',x:74,y:56,s:21,mx:54,my:68,ms:42,dep:1.2,dur:6,del:-1.5}
+];
+
+/* ---------- FAQ (drafted from the menu, hours and address) ---------- */
+var FAQ=[
+ {q:{en:'Can I reserve a table?',da:'Kan jeg reservere bord?'},
+  a:{en:'Yes. Use the form above and pick a day, a time and the number of guests. For groups of more than 8, please also call us on +45 28 83 39 67.',da:'Ja. Brug formularen ovenfor og vælg dag, tidspunkt og antal gæster. Er I flere end 8, så ring også til os på +45 28 83 39 67.'}},
+ {q:{en:'What are your opening hours?',da:'Hvad er jeres åbningstider?'},
+  a:{en:'Tuesday to Thursday and Saturday 9–18, Friday 9–23 and Sunday 9–16. We are closed on Mondays.',da:'Tirsdag til torsdag og lørdag 9–18, fredag 9–23 og søndag 9–16. Vi har lukket om mandagen.'}},
+ {q:{en:'Where do I find you?',da:'Hvor finder jeg jer?'},
+  a:{en:'Peblinge Dossering 4, 2200 København, by Peblinge Lake. We are on the basement level (kld), door on the right (TH).',da:'Peblinge Dossering 4, 2200 København, ved Peblinge Sø. Vi ligger i kælderen (kld), døren til højre (TH).'}},
+ {q:{en:'When is brunch served, and what is in it?',da:'Hvornår serverer I brunch, og hvad er der i den?'},
+  a:{en:'Brunch is served from 9 to 14 for 140 kr: yoghurt with fresh fruit, homemade granola and honey, a homemade bun, rye bread and butter, cheese and jam, tuna mousse, scrambled eggs and a waffle.',da:'Brunch serveres fra 9 til 14 for 140 kr: yoghurt med frisk frugt, hjemmelavet granola og honning, hjemmebagt bolle, rugbrød og smør, ost og marmelade, tunmousse, røræg og vaffel.'}},
+ {q:{en:'Is the food homemade?',da:'Er maden hjemmelavet?'},
+  a:{en:'Our buns, cookies and cake of the day are baked in-house. The granola, lemonade and ginger tea are homemade too.',da:'Vores boller, cookies og dagens kage er hjemmebagt. Granola, lemonade og ingefærte er også hjemmelavet.'}},
+ {q:{en:'Do you have oat milk?',da:'Har I havremælk?'},
+  a:{en:'Yes. Oat milk and syrup are 5 kr extra in your coffee.',da:'Ja. Havremælk og sirup koster 5 kr ekstra i din kaffe.'}},
+ {q:{en:'What if I have an allergy?',da:'Hvad hvis jeg har en allergi?'},
+  a:{en:'Please tell us when you order. Ask us about allergens and we will tell you what is in each dish.',da:'Sig det, når du bestiller. Spørg os om allergener, så fortæller vi, hvad der er i hver ret.'}}
+];
+function renderFaq(){
+  $('#faqList').innerHTML=FAQ.map(function(f,i){
+    return '<details'+(i===0?' open':'')+'><summary>'+f.q[lang]+'</summary><p class="ans">'+f.a[lang]+'</p></details>';
+  }).join('');
+}
+
+/* ---------- Copenhagen time ---------- */
+function cph(){
+  var f=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Copenhagen',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});
+  var o={};f.formatToParts(new Date()).forEach(function(x){o[x.type]=x.value});
+  return {y:+o.year,m:+o.month,d:+o.day,h:+o.hour,min:+o.minute};
+}
+function dstr(y,m,d){return y+'-'+pad(m)+'-'+pad(d)}
+function todayStr(){var c=cph();return dstr(c.y,c.m,c.d)}
+function parse(s){var a=s.split('-').map(Number);return {y:a[0],m:a[1],d:a[2]}}
+function dow(s){var p=parse(s);return new Date(Date.UTC(p.y,p.m-1,p.d)).getUTCDay()}
+function addDays(s,n){var p=parse(s);var x=new Date(Date.UTC(p.y,p.m-1,p.d+n));return dstr(x.getUTCFullYear(),x.getUTCMonth()+1,x.getUTCDate())}
+function longDate(s){var p=parse(s);return new Date(Date.UTC(p.y,p.m-1,p.d)).toLocaleDateString(lang==='da'?'da-DK':'en-GB',{weekday:'long',day:'numeric',month:'long',timeZone:'UTC'})}
+function fmt(min){return pad(Math.floor(min/60))+':'+pad(min%60)}
+
+/* ---------- open status + hours list ---------- */
+function renderStatus(){
+  var c=cph(),n=c.h*60+c.min,td=todayStr(),h=HOURS[dow(td)],txt,open=false;
+  if(h&&n>=h[0]*60&&n<h[1]*60){open=true;txt=t('st_open',{t:pad(h[1])+':00'})}
+  else if(h&&n<h[0]*60){txt=t('st_today',{t:pad(h[0])+':00'})}
+  else{
+    var k=1;while(k<8&&!HOURS[dow(addDays(td,k))])k++;
+    var nx=HOURS[dow(addDays(td,k))]||[9,0],tt=pad(nx[0])+':00';
+    txt=k===1?t('st_tom',{t:tt}):t('st_day',{d:t('days')[dow(addDays(td,k))],t:tt});
+  }
+  $('#statusText').textContent=txt;
+  $('#status').classList.toggle('closed',!open);
+}
+function renderHours(){
+  var td=dow(todayStr()),order=[2,3,4,5,6,0,1];
+  $('#hours').innerHTML=order.map(function(d){
+    var h=HOURS[d];
+    return '<li class="'+(d===td?'today':'')+'"><span>'+cap(t('days')[d])+'</span><span>'+(h?pad(h[0])+':00 – '+pad(h[1])+':00':t('closed'))+'</span></li>';
+  }).join('');
+}
+
+/* ---------- picks ---------- */
+var picks=[];
+function togglePick(id){var i=picks.indexOf(id);if(i>-1)picks.splice(i,1);else picks.push(id);syncPicks()}
+function syncPicks(){
+  $$('.add').forEach(function(b){
+    var on=picks.indexOf(b.dataset.id)>-1,n=byId[b.dataset.id].n[lang];
+    b.setAttribute('aria-pressed',on);
+    b.textContent=on?'✓':'+';
+    b.setAttribute('aria-label',t(on?'rem_from':'add_to',{n:n}));
+  });
+  $('#pickChips').innerHTML=picks.length?picks.map(function(id){var n=byId[id].n[lang];return '<span class="pk">'+n+'<button type="button" data-rm="'+id+'" aria-label="'+t('rm',{n:n})+'">×</button></span>'}).join(''):'<span class="hint">'+t('picks_empty')+'</span>';
+  $('#pn').textContent=picks.length;
+  $('#picksPill').hidden=picks.length===0;
+}
+document.addEventListener('click',function(e){
+  var a=e.target.closest('.add');if(a){togglePick(a.dataset.id);return}
+  var r=e.target.closest('[data-rm]');if(r){togglePick(r.dataset.rm)}
+});
+
+/* ---------- top six stage ---------- */
+function buildStage(){
+  $('#stage').innerHTML=TOP.map(function(tp,i){
+    var m=byId[tp.id];
+    return '<article class="bubble" data-depth="'+tp.dep+'" style="--x:'+tp.x+';--y:'+tp.y+';--s:'+tp.s+';--mx:'+tp.mx+';--my:'+tp.my+';--ms:'+tp.ms+'">'+
+      '<div class="float" style="--dur:'+tp.dur+'s;--del:'+tp.del+'s">'+
+      '<div class="frame" style="--bg:'+tp.bg+'"><svg viewBox="0 0 200 200" role="img" aria-label="'+t(tp.alt)+'"><use href="#'+tp.sym+'" width="200" height="200"/></svg></div>'+
+      (i===0?'<span class="sticker" style="right:2%;top:2%">'+t('sticker_top')+'</span>':'')+
+      '<div class="tag"><span class="rank">'+(i+1)+'</span><span class="nm">'+m.n[lang]+'</span><span class="pr">'+m.p+' kr</span><button class="add" type="button" data-id="'+tp.id+'" aria-pressed="false">+</button></div>'+
+      '</div></article>';
+  }).join('');
+  pxs.forEach(function(o){o.items=$$('[data-depth]',o.root)});
+}
+
+/* ---------- menu ---------- */
+var mstate={cat:'all',q:''};
+function renderCats(){
+  $('#cats').innerHTML=CAT_IDS.map(function(c){return '<button class="chip" type="button" data-cat="'+c+'" aria-pressed="'+(mstate.cat===c)+'">'+t('cat_'+c)+'</button>'}).join('');
+}
+function renderMenu(){
+  var q=mstate.q.trim().toLowerCase();
+  var list=MENU.filter(function(i){
+    return (mstate.cat==='all'||i.c===mstate.cat)&&(!q||(i.n.en+' '+i.n.da+' '+i.d.en+' '+i.d.da).toLowerCase().indexOf(q)>-1);
+  });
+  $('#menuGrid').innerHTML=list.length?list.map(function(i){
+    var d=i.d[lang];
+    return '<article class="item"><h3>'+i.n[lang]+'</h3><span class="price">'+i.p+' kr</span>'+(d?'<p>'+d+'</p>':'')+'<button class="add" type="button" data-id="'+i.id+'" aria-pressed="false">+</button></article>';
+  }).join(''):'<p class="empty">'+t('empty')+'</p>';
+  $('#menuCount').textContent=list.length===1?t('cnt1'):t('cntn',{n:list.length});
+  syncPicks();
+}
+$('#cats').addEventListener('click',function(e){
+  var b=e.target.closest('[data-cat]');if(!b)return;
+  mstate.cat=b.dataset.cat;renderCats();renderMenu();
+});
+$('#q').addEventListener('input',function(){mstate.q=this.value;renderMenu()});
+
+/* ---------- reservation ---------- */
+var res={date:'',time:null,guests:2};
+function isFull(date,tm,g){
+  var h=0,s=date+tm;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;
+  return h%9===0||(g>=5&&h%4===0);
+}
+function slotsFor(date){
+  var h=HOURS[dow(date)],out=[],c=cph(),now=c.h*60+c.min,isToday=date===todayStr();
+  if(!h)return out;
+  for(var m=h[0]*60;m<=(h[1]-1)*60;m+=30){
+    out.push({t:m,past:isToday&&m<=now+30,full:isFull(date,m,res.guests)});
+  }
+  return out;
+}
+function renderSlots(){
+  var list=slotsFor(res.date),ok=false;
+  list.forEach(function(s){if(s.t===res.time&&!s.past&&!s.full)ok=true});
+  if(!ok)res.time=null;
+  $('#slots').innerHTML=list.map(function(s){
+    var dis=s.past||s.full;
+    return '<button type="button" class="slot" data-t="'+s.t+'" aria-pressed="'+(s.t===res.time)+'"'+(dis?' disabled title="'+t(s.past?'slot_past':'slot_full')+'"':'')+'>'+fmt(s.t)+'</button>';
+  }).join('');
+  var free=list.filter(function(s){return !s.past&&!s.full}).length;
+  $('#slotHint').textContent=!list.length?t('slot_closed'):(free?t('slot_hint',{n:free}):t('slot_none'));
+  renderSummary();
+}
+function guestLabel(n){return t(n===1?'guest1':'guestn',{n:n})}
+function renderSummary(){
+  var wd=dow(res.date),h=HOURS[wd];
+  $('#sumDay').textContent=longDate(res.date);
+  $('#sumTime').textContent=res.time==null?t('tk_choose'):fmt(res.time);
+  $('#sumGuests').textContent=guestLabel(res.guests);
+  $('#sumHours').textContent=h?t('open_on',{h:pad(h[0])+':00 – '+pad(h[1])+':00',d:t('days_on')[wd]}):t('closed_on',{d:t('days_on')[wd]});
+  $('#guests').textContent=res.guests;
+  $('#gHint').textContent=res.guests>8?t('g_big'):'';
+  $$('.cl').forEach(function(b){b.setAttribute('aria-pressed',res.date===addDays(todayStr(),+b.dataset.q))});
+}
+function setDate(s){res.date=s;$('#date').value=s;renderSlots()}
+$('#slots').addEventListener('click',function(e){
+  var b=e.target.closest('.slot');if(!b||b.disabled)return;
+  res.time=+b.dataset.t;renderSlots();
+});
+$$('.cl').forEach(function(b){b.addEventListener('click',function(){setDate(addDays(todayStr(),+b.dataset.q))})});
+$('#date').addEventListener('change',function(){
+  var v=this.value,td=todayStr();
+  setDate(!v||v<td?td:v);
+});
+$('#gMinus').addEventListener('click',function(){res.guests=clamp(res.guests-1,1,10);renderSlots()});
+$('#gPlus').addEventListener('click',function(){res.guests=clamp(res.guests+1,1,10);renderSlots()});
+
+var lastReq=null;
+function fail(msg,el){
+  $('#err').textContent=msg;
+  $$('.inp').forEach(function(i){i.removeAttribute('aria-invalid')});
+  if(el){el.setAttribute('aria-invalid','true');el.focus()}
+}
+function buildSummary(){
+  var r=lastReq,pk=r.picks.length?r.picks.map(function(id){return byId[id].n[lang]}).join(', '):t('none');
+  var when=longDate(r.date)+' · '+fmt(r.time);
+  return {when:when,guests:guestLabel(r.guests),pk:pk};
+}
+function renderDone(){
+  if(!lastReq)return;
+  var s=buildSummary();
+  $('#doneTitle').textContent=t('done_title',{n:lastReq.name});
+  $('#dWhen').textContent=s.when;$('#dGuests').textContent=s.guests;$('#dName').textContent=lastReq.name;
+  $('#dContact').textContent=lastReq.contact;$('#dPicks').textContent=s.pk;$('#dRef').textContent=lastReq.ref;
+}
+$('#resForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var name=$('#name'),phone=$('#phone'),email=$('#email');
+  if(res.time==null){fail(t('err_time'),null);$('#slots').scrollIntoView({block:'center'});return}
+  if(!name.value.trim()){fail(t('err_name'),name);return}
+  if(!phone.value.trim()&&!email.value.trim()){fail(t('err_contact'),phone);return}
+  if(email.value.trim()&&!/^\S+@\S+\.\S+$/.test(email.value.trim())){fail(t('err_email'),email);return}
+  fail('',null);
+  lastReq={date:res.date,time:res.time,guests:res.guests,name:name.value.trim(),contact:[phone.value.trim(),email.value.trim()].filter(Boolean).join(' · '),notes:$('#notes').value.trim(),picks:picks.slice(),ref:'C4-'+Math.random().toString(36).slice(2,6).toUpperCase()};
+  renderDone();
+  $('#resForm').hidden=true;$('#done').hidden=false;
+  $('#done').scrollIntoView({block:'center',behavior:reduce?'auto':'smooth'});
+});
+$('#editReq').addEventListener('click',function(){$('#done').hidden=true;$('#resForm').hidden=false;$('#resForm').scrollIntoView({block:'center'})});
+
+/* ---------- copy helpers ---------- */
+function copyText(text,btn,labelKey){
+  var done=function(ok){btn.textContent=t(ok?'copied':'copy_fail');setTimeout(function(){btn.textContent=t(labelKey)},1800)};
+  try{navigator.clipboard.writeText(text).then(function(){done(true)},function(){done(false)})}catch(err){done(false)}
+}
+$('#copySum').addEventListener('click',function(){
+  var r=lastReq,s=buildSummary();
+  var txt=t('sum_title')+'\n'+s.when+'\n'+s.guests+'\n'+t('lbl_name')+': '+r.name+'\n'+t('d_contact')+': '+r.contact+'\n'+t('d_picks')+': '+s.pk+(r.notes?'\n'+t('sum_notes')+': '+r.notes:'')+'\n'+t('d_ref')+': '+r.ref;
+  copyText(txt,this,'copy_sum');
+});
+$('#copyAddr').addEventListener('click',function(){copyText($('#addrText').textContent,this,'copy_addr')});
+
+/* ---------- map pan and zoom ---------- */
+(function(){
+  var svg=$('#map'),g=$('#mapg'),card=$('#mapcard'),k=1,tx=0,ty=0,drag=null;
+  function apply(){
+    var mx=(k-1)*400,my=(k-1)*280;tx=clamp(tx,-mx,mx);ty=clamp(ty,-my,my);
+    g.setAttribute('transform','translate('+(400+tx)+' '+(280+ty)+') scale('+k+') translate(-400 -280)');
+    card.classList.toggle('zoomed',k>1.01);
+  }
+  function zoom(f){k=clamp(k*f,1,3);apply()}
+  $('#zIn').addEventListener('click',function(){zoom(1.4)});
+  $('#zOut').addEventListener('click',function(){zoom(1/1.4)});
+  $('#zReset').addEventListener('click',function(){k=1;tx=0;ty=0;apply()});
+  svg.addEventListener('dblclick',function(){zoom(1.4)});
+  svg.addEventListener('pointerdown',function(e){
+    drag={x:e.clientX,y:e.clientY,tx:tx,ty:ty};card.classList.add('drag');
+    try{svg.setPointerCapture(e.pointerId)}catch(err){}
+  });
+  svg.addEventListener('pointermove',function(e){
+    if(!drag)return;
+    var ratio=800/svg.getBoundingClientRect().width;
+    tx=drag.tx+(e.clientX-drag.x)*ratio;ty=drag.ty+(e.clientY-drag.y)*ratio;apply();
+  });
+  function end(){drag=null;card.classList.remove('drag')}
+  svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);
+})();
+
+/* ---------- nav ---------- */
+var nav=$('#nav'),burger=$('#burger');
+burger.addEventListener('click',function(){
+  var o=nav.classList.toggle('open');burger.setAttribute('aria-expanded',o);burger.setAttribute('aria-label',t(o?'burger_close':'burger_open'));
+});
+$$('#links a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');burger.setAttribute('aria-expanded','false');burger.setAttribute('aria-label',t('burger_open'))})});
+if('IntersectionObserver' in window){
+  var links={};$$('#links a').forEach(function(a){links[a.dataset.s]=a});
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if(en.isIntersecting){Object.keys(links).forEach(function(k){links[k].classList.toggle('on',k===en.target.id)})}
+    });
+  },{rootMargin:'-45% 0px -50% 0px'});
+  ['top','menu','story','reserve','visit'].forEach(function(id){var s=document.getElementById(id);if(s)io.observe(s)});
+  var rv=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');rv.unobserve(en.target)}})},{threshold:.15});
+  $$('.reveal').forEach(function(el){rv.observe(el)});
+}else{$$('.reveal').forEach(function(el){el.classList.add('in')})}
+
+/* ---------- floating dishes: scroll + pointer parallax ---------- */
+var pxs=[];
+function initParallax(){
+  pxs=$$('.px').map(function(root){
+    var o={root:root,items:$$('[data-depth]',root),mx:0,my:0,tx:0,ty:0};
+    root.addEventListener('pointermove',function(e){
+      var r=root.getBoundingClientRect();
+      o.tx=((e.clientX-r.left)/r.width-.5)*2;o.ty=((e.clientY-r.top)/r.height-.5)*2;
+    });
+    root.addEventListener('pointerleave',function(){o.tx=0;o.ty=0});
+    return o;
+  });
+}
+function progress(){
+  var h=document.documentElement.scrollHeight-window.innerHeight;
+  $('#bar').style.transform='scaleX('+(h>0?clamp(window.scrollY/h,0,1):0)+')';
+}
+function frame(){
+  var vh=window.innerHeight;
+  pxs.forEach(function(o){
+    var r=o.root.getBoundingClientRect();
+    if(r.bottom<-300||r.top>vh+300)return;
+    var p=clamp(((r.top+r.height/2)-vh/2)/vh,-1.4,1.4);
+    o.mx+=(o.tx-o.mx)*.08;o.my+=(o.ty-o.my)*.08;
+    o.items.forEach(function(el){
+      var d=+el.dataset.depth;
+      var k=window.innerWidth<=700?.18:1,y=(-p*d*130+o.my*d*20)*k,x=o.mx*d*28*k,rot=(p*d*16+o.mx*d*5)*k;
+      el.style.transform='translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0)';
+      el.style.setProperty('--r',rot.toFixed(1)+'deg');
+    });
+  });
+  progress();
+  requestAnimationFrame(frame);
+}
+
+/* ---------- language ---------- */
+function renderMarquee(){
+  var grp='<div class="grp">'+t('marquee').map(function(w){return '<span>'+w+'</span><i>•</i>'}).join('')+'</div>';
+  $('#marquee').innerHTML=grp+grp;
+}
+function applyLang(){
+  document.documentElement.lang=lang;
+  $$('[data-i18n]').forEach(function(el){el.textContent=t(el.dataset.i18n)});
+  $$('[data-i18n-ph]').forEach(function(el){el.setAttribute('placeholder',t(el.dataset.i18nPh))});
+  $$('[data-i18n-aria]').forEach(function(el){el.setAttribute('aria-label',t(el.dataset.i18nAria))});
+  $$('.lang button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===lang)});
+  $('#ringText').textContent=t('ring');
+  burger.setAttribute('aria-label',t(nav.classList.contains('open')?'burger_close':'burger_open'));
+  renderMarquee();renderCats();buildStage();renderMenu();renderHours();renderStatus();renderSlots();syncPicks();renderFaq();renderDone();
+}
+$$('.lang button').forEach(function(b){b.addEventListener('click',function(){
+  if(lang===b.dataset.lang)return;
+  lang=b.dataset.lang;
+  try{localStorage.setItem('c4lang',lang)}catch(e){}
+  applyLang();
+})});
+
+/* ---------- boot ---------- */
+initParallax();
+(function(){
+  var td=todayStr();$('#date').min=td;
+  var d=td,k=0;
+  while(k<8){
+    res.date=d;
+    if(slotsFor(d).some(function(s){return !s.past&&!s.full}))break;
+    d=addDays(td,++k);
+  }
+  $('#date').value=res.date;
+})();
+applyLang();
+setInterval(renderStatus,60000);
+if(!reduce){requestAnimationFrame(frame)}else{window.addEventListener('scroll',progress,{passive:true})}
+})();
+</script>
+</body>
+</html>
